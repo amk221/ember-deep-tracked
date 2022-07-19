@@ -5,8 +5,9 @@ import { click, render, settled } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-
+import { modifier } from 'ember-modifier';
 import { tracked } from 'ember-deep-tracked';
+import { A as emberA } from '@ember/array';
 
 module('deep tracked (in templates)', function (hooks) {
   setupRenderingTest(hooks);
@@ -150,6 +151,26 @@ module('deep tracked (in templates)', function (hooks) {
         myArray[0][2] = 5;
         await settled();
         assert.dom().hasText('1 2 5 4');
+      });
+
+      test('it works with modifiers', async function (assert) {
+        // this.myArray = emberA([[1, 2, 3]]);
+        this.myArray = tracked([1, 2, 3]);
+
+        this.exampleModifier = modifier((element, [myArray]) => {
+          assert.step('modify')
+        }, { eager: false });
+
+        await render(hbs`
+          <div {{this.exampleModifier this.myArray}}></div>
+        `);
+
+        // this.myArray.addObject(4);
+        this.myArray.push(4)
+
+        await settled();
+
+        assert.verifySteps(['modify', 'modify']);
       });
     });
 
