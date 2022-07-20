@@ -210,4 +210,21 @@ module('deep tracked', function (hooks) {
       },
     ]);
   });
+
+  test('indexOf', async function (assert) {
+    assert.expect(1);
+
+    class Foo {
+      @tracked arr = [] as any;
+    }
+
+    let instance = new Foo();
+
+    const item = { bar: 'baz' };
+
+    instance.arr.push(item);
+
+    assert.strictEqual(instance.arr.indexOf(item), 0);
+    assert.strictEqual(instance.arr.indexOf(item), 0);
+  });
 });

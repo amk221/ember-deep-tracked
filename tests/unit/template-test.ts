@@ -6,7 +6,8 @@ import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { modifier } from 'ember-modifier';
-import { tracked } from 'ember-deep-tracked';
+// import { tracked } from 'ember-deep-tracked';
+import { tracked } from 'tracked-built-ins';
 import { A as emberA } from '@ember/array';
 
 module('deep tracked (in templates)', function (hooks) {
