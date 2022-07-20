@@ -212,7 +212,7 @@ module('deep tracked', function (hooks) {
   });
 
   test('indexOf', async function (assert) {
-    assert.expect(1);
+    assert.expect(2);
 
     class Foo {
       @tracked arr = [] as any;
